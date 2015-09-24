@@ -38,4 +38,9 @@ defmodule WerdCounterTest do
     expected = %{"two" => 1, "words" => 1}
     assert WerdCounter.count("two_words") == expected
   end
+
+  test "count greatest number of occurrences" do
+    expected = { "fish", 4 }
+    assert WerdCounter.most("one fish two fish red fish blue fish") == expected
+  end
 end
