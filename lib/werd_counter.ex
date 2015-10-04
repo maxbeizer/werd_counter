@@ -9,12 +9,13 @@ defmodule WerdCounter do
   def most(string) do
     string
     |> count
-    |> Enum.reduce {"none", 0}, fn (i, acc) ->
-      if first_value_greater?(i, acc) do
-        i
-      else
-        acc
-      end
+    |> Enum.reduce {"none", 0}, &pick_greater(&1, &2)
+  end
+
+  defp pick_greater(first, second) do
+    cond do
+      elem(first, 1) > elem(second, 1) -> first
+      elem(first, 1) < elem(second, 1) -> second
     end
   end
 
@@ -22,9 +23,5 @@ defmodule WerdCounter do
     Enum.reduce word_list, %{}, fn (i, acc) ->
       Dict.update acc, i, 1, &(&1 + 1)
     end
-  end
-
-  defp first_value_greater?(tup1, tup2) do
-    elem(tup1, 1) > elem(tup2, 1)
   end
 end
