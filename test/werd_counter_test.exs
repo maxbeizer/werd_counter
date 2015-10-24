@@ -43,4 +43,10 @@ defmodule WerdCounterTest do
     expected = { "fish", 4 }
     assert WerdCounter.most("one fish two fish red fish blue fish") == expected
   end
+
+  test "it can handle a test file" do
+    file = "./test/support/example_file.txt"
+    expected = {"five", 5}
+    assert WerdCounter.process_file(file) == expected
+  end
 end
