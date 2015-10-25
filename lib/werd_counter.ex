@@ -1,6 +1,7 @@
 defmodule WerdCounter do
   def count(string) do
     string
+    |> String.strip
     |> String.downcase
     |> String.split
     |> reduce
@@ -15,19 +16,22 @@ defmodule WerdCounter do
   def process_file(path_to_file) do
     path_to_file
     |> File.stream!
-    |> Stream.map(&String.strip/1)
-    |> Stream.map(&WerdCounter.count/1)
-    |> get_funky
+    |> Stream.map(&count/1)
+    |> build_words_and_counts
     |> get_the_biggest_count
   end
 
-  def get_funky(col) do
-    col
-    |> Enum.reduce %{}, fn(x, acc) -> Map.merge x, acc, fn(_k, v1, v2) -> v1+v2 end end
+  defp build_words_and_counts(collection) do
+    collection
+    |> Enum.reduce %{}, fn(x, acc) -> merge_counts(x, acc) end
   end
 
-  def get_the_biggest_count(map) do
-    map
+  defp merge_counts(map1, map2) do
+    Map.merge map1, map2, fn(_k, v1, v2) -> v1 + v2 end
+  end
+
+  defp get_the_biggest_count(list_of_words_and_counts) do
+    list_of_words_and_counts
     |> Enum.reduce {"none", 0}, &pick_greater(&1, &2)
   end
 
