@@ -15,11 +15,15 @@ defmodule WerdCounter do
   def process_file(path_to_file) do
     path_to_file
     |> File.stream!
+    |> Stream.take(10)
     |> Stream.map(&String.strip/1)
     |> Stream.map(&WerdCounter.count/1)
-    |> get_funky
+    |> Enum.map(&async_things/1)
+    |> Enum.map(&Task.await/1)
     |> get_the_biggest_count
   end
+
+  def async_things(things), do: Task.async(fn -> get_funky(things) end)
 
   def get_funky(col) do
     col
