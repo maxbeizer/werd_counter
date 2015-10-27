@@ -10,3 +10,12 @@ Based on the exercism.io exercise.
 $ mix test
 ```
 
+### Using iex
+```
+$ iex -S mix
+```
+
+### Process the static file
+```elixir
+$ WerdCounter.process_file "./static/war_and_peace.txt"
+```
