@@ -1,7 +1,7 @@
 WerdCounter
 ===========
 
-![word](http://cdn.meme.am/instances/500x/58285888.jpg)
+![word](./static/wordtoyourmotha.jpg)
 
 Based on the exercism.io exercise.
 
