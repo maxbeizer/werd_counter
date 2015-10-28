@@ -4,7 +4,7 @@ defmodule WerdCounter do
     |> String.strip
     |> String.downcase
     |> String.split
-    |> reduce
+    |> agent_count
   end
 
   def most(string) do
@@ -22,6 +22,7 @@ defmodule WerdCounter do
   end
 
   defp build_words_and_counts(collection) do
+    IO.puts "building words and count"
     collection
     |> Enum.reduce %{}, fn(x, acc) -> merge_counts(x, acc) end
   end
@@ -42,9 +43,8 @@ defmodule WerdCounter do
     end
   end
 
-  defp reduce(word_list) do
-    Enum.reduce word_list, %{}, fn (i, acc) ->
-      Dict.update acc, i, 1, &(&1 + 1)
-    end
+  defp agent_count(list) do
+    pid = CounterAgent.new
+    CounterAgent.count(pid, list)
   end
 end
