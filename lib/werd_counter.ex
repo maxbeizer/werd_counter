@@ -1,4 +1,24 @@
 defmodule WerdCounter do
+  use Application
+
+  def start(_,_) do
+    import Supervisor.Spec, warn: false
+
+    children = [
+      worker(WerdCounter.WordsAgent, [])
+    ]
+
+    Supervisor.start_link(children, [strategy: :one_for_one, name: __MODULE__])
+  end
+
+  def count_words_in_file(file_path) do
+    WerdCounter.WordsAgent.clear_words
+    IO.puts "Starting to count words in file"
+    Task.async(fn -> WerdCounter.File.count(file_path) end)
+    |> Task.await(:infinity)
+    |> IO.puts
+  end
+
   def count(string) do
     string
     |> String.strip
