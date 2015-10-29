@@ -11,7 +11,7 @@ defmodule WerdCounter do
     Supervisor.start_link(children, [strategy: :one_for_one, name: __MODULE__])
   end
 
-  def count_words_in_file(file_path) do
+  def process_file_async(file_path) do
     WerdCounter.WordsAgent.clear_words
     IO.puts "Starting to count words in file"
     Task.async(fn -> WerdCounter.File.count(file_path) end)
