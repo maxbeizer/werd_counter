@@ -1,5 +1,5 @@
 defmodule WerdCounter.File do
-  @max_current_line_tasks 100
+  @max_current_line_tasks 20
   @print_top_words 5
 
   def count(file_path) do
