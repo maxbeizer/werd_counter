@@ -19,3 +19,9 @@ $ iex -S mix
 ```elixir
 $ WerdCounter.process_file "./static/war_and_peace.txt"
 ```
+
+or
+
+```elixir
+$ WerdCounter.count_words_in_file "./static/war_and_peace.txt"
+```
