@@ -1,5 +1,6 @@
 defmodule WerdCounter.File do
   @max_current_line_tasks 100
+  @print_top_words 5
 
   def count(file_path) do
     file_path
@@ -30,7 +31,15 @@ defmodule WerdCounter.File do
 
   def summarize({_, tasks}) do
     wait_for_tasks(tasks)
-    "Done!"
+
+    WerdCounter.WordsAgent.sort_desc
+    |> Enum.take(@print_top_words)
+    |> Enum.reduce({1, "\nCount complete, Top #{@print_top_words} words by usage:\n"},
+        fn
+          {word, count}, {index, summary} -> {index + 1, summary <> "#{index}: #{word} - #{count}\n"}
+        end
+      )
+    |> (fn {_, summary} -> summary end).()
   end
 
   def count_words(line) do

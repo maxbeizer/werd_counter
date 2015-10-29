@@ -18,4 +18,11 @@ defmodule WerdCounter.WordsAgent do
   def clear_words do
     Agent.update(name, fn _ -> HashDict.new end)
   end
+
+  def sort_desc do
+    current = get
+    sorted = Enum.sort(current, fn {_, v1}, {_, v2} -> v1 > v2 end)
+    Agent.update(name, fn _ -> sorted end)
+    sorted
+  end
 end

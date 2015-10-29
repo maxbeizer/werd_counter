@@ -19,7 +19,15 @@ defmodule WerdCounter do
     |> IO.puts
   end
 
-  def count(string) do
+  def process_file(path_to_file) do
+    path_to_file
+    |> File.stream!
+    |> Stream.map(&count/1)
+    |> build_words_and_counts
+    |> get_the_biggest_count
+  end
+
+  defp count(string) do
     string
     |> String.strip
     |> String.downcase
@@ -27,17 +35,9 @@ defmodule WerdCounter do
     |> agent_count
   end
 
-  def most(string) do
+  defp most(string) do
     string
     |> count
-    |> get_the_biggest_count
-  end
-
-  def process_file(path_to_file) do
-    path_to_file
-    |> File.stream!
-    |> Stream.map(&count/1)
-    |> build_words_and_counts
     |> get_the_biggest_count
   end
 
