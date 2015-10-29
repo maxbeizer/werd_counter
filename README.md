@@ -23,5 +23,5 @@ $ WerdCounter.process_file "./static/war_and_peace.txt"
 or
 
 ```elixir
-$ WerdCounter.count_words_in_file "./static/war_and_peace.txt"
+$ WerdCounter.process_file_async "./static/war_and_peace.txt"
 ```
