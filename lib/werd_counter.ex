@@ -16,7 +16,6 @@ defmodule WerdCounter do
     IO.puts "Starting to count words in file"
     Task.async(fn -> WerdCounter.File.count(file_path) end)
     |> Task.await(:infinity)
-    |> IO.puts
   end
 
   def process_file(path_to_file) do
